@@ -16,12 +16,16 @@ db.on("error", function (error) {
 module.exports = function (app) {
     // Main route (simple Hello World Message)
     app.get("/", function (req, res) {
-        res.send("Home");
+        let handleBarsObj = {};
+        res.render("index", handleBarsObj);
+        // res.send("Home");
     });
 
 
     app.get("/savedArticles", function (req, res) {
-        res.send("Saved Articles");
+        let handleBarsObj = {};
+        res.render("savedArticle", handleBarsObj);
+        // res.send("Saved Articles");
     });
 
 
