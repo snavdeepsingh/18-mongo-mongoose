@@ -17,9 +17,12 @@
                     <li>
                         <a style="color:white" href="/savedArticles">Saved Articles</a>
                     </li>
+                    <li>
+                        <a style="background-color:red; color:white" href="/scrape">Scrape New Articles</a>
+                    </li>
 
                 </ul>
-                <button type="submit" style="background-color:red; color:white" class="btn btn-default">Scrape New Articles</button>
+
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -33,17 +36,45 @@
         <p style="text-align:center; color:white">NEW YORK TIMES EDITION</p>
 
     </div>
-    <div class="panel panel-default">
-        <div  style="color:white; background-color:steelblue" class="panel-heading">
-            <div class="article-heading">
-               <h1>Article Heading</h1>
-            </div>
-            <p>
-                <a style="color:white; background-color:green" href="#" class="btn btn-primary" role="button">Save Article</a>
-            </p>
-        </div>
-        <div class="panel-body">
-           <h4>Panel content</h4> 
+    <div class="row">
+        <div class="col-12">
+            <ul>
+                {{#each articles}}
+                <li>
+                    <div {{this.id}}>
+                        <div class="panel panel-default">
+                            <div style="color:white; background-color:steelblue" class="panel-heading">
+                                <div class="article-heading">
+                                    <h1>{{this.title}}</h1>
+                                </div>
+                                <p>
+                                    <a style="color:white; background-color:green" href="#" class="btn btn-primary" data-id="{{this.id}}" role="button">Save Article</a>
+                                </p>
+                            </div>
+                            <div class="panel-body">
+                                <h4>{{this.summary}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{/each}} 
+                
+               
+            </ul>
+
+             {{#if articles}}
+                <footer class="footer py-3">
+                    <div class="container text-center">
+                        <button type="button" class="btn btn-light btn-sm" id="cleardb">CLEAR DATABASE</button>
+                    </div>
+                </footer>
+                {{else}}
+                <div style="background-color:steelblue; color:white" class="card">
+                    <h3 class="card-header text-white text-center">
+                        Uh Oh. Looks like we don't have any news articles.
+                    </h3>
+                </div>
+                {{/if}}
         </div>
     </div>
 </div>
