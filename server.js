@@ -1,29 +1,24 @@
 // Dependencies
 var express = require("express");
-var mongojs = require("mongojs");
+var bodyParser = require("body-parser");
+var exphbs = require("express-handlebars");
 // Require request and cheerio. This makes the scraping possible
 var request = require("request");
 var cheerio = require("cheerio");
 
+var PORT = process.env.PORT || 3000;
 // Initialize Express
 var app = express();
 
-var PORT = process.env.PORT || 3000;
 
-// Database configuration
-var databaseUrl = "scraper";
-var collections = ["scrapedData"];
 
-// Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function(error) {
-  console.log("Database Error:", error);
-});
+app.use(express.static("public"));
 
-// Main route (simple Hello World Message)
-app.get("/", function(req, res) {
-  res.send("Hello world");
-});
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+require("./routes/api-routes.js")(app);
+require("./routes/html-routes.js")(app);
 
 
 
