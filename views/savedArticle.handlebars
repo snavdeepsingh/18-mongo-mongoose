@@ -1,31 +1,3 @@
-{{!-- Modal goes here --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="displaynotes">
-                    {{!--Saved Notes display here --}}
-                </div>
-                <form>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">New Note</label>
-                        <textarea class="form-control" id="bodyinput" rows="3" placeholder="New Note"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="savenote">Save Note</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 {{!-- navbar --}}
 <div class="container">
     <nav style="background-color: steelblue" class="navbar navbar-default">
@@ -53,6 +25,35 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+
+    {{!-- Modal goes here --}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="displaynotes">
+                        {{!--Saved Notes display here --}}
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">New Note</label>
+                            <textarea class="form-control" id="bodyinput" rows="3" placeholder="New Note"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="savenote">Save Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div style="background-image:url('./images/NYT.jpeg');background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat; height: calc(50vh - 66px);" class="jumbotron">
@@ -87,9 +88,9 @@
                 {{!-- Hide #noarticles div if we have articles --}} {{!-- We are doing it this way so we can control the div later via JQuery--}}
                 {{#if articles}}
                 <div class="card" id="noarticles" style="display: none;">
-                {{else}}
-                    <div  style="background-color:steelblue; color:white" class="card" class="card" id="noarticles">
-                {{/if}}
+                    {{else}}
+                    <div style="background-color:steelblue; color:white" class="card" class="card" id="noarticles">
+                        {{/if}}
 
                         <h3 class="card-header text-white text-center">
                             Uh Oh. Looks like we don't have any saved articles.
