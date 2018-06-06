@@ -1,17 +1,11 @@
-var mongojs = require("mongojs");
+var mongoose = require("mongoose");
 // Require request and cheerio. This makes the scraping possible
 var request = require("request");
 var cheerio = require("cheerio");
+var axios = require("axios");
+var db = require("../models");
 
-// Database configuration
-var databaseUrl = "scraper";
-var collections = ["scrapedData"];
 
-// Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function (error) {
-    console.log("Database Error:", error);
-});
 
 module.exports = function (app) {
 
@@ -37,6 +31,7 @@ module.exports = function (app) {
     // Scrape data from one site and place it into the mongodb db
     app.get("/scrape", function (req, res) {
         res.send("Ready to scrape some articles??");
+
     });
 
 

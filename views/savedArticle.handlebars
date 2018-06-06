@@ -1,3 +1,32 @@
+{{!-- Modal goes here --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="displaynotes">
+                    {{!--Saved Notes display here --}}
+                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">New Note</label>
+                        <textarea class="form-control" id="bodyinput" rows="3" placeholder="New Note"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="savenote">Save Note</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- navbar --}}
 <div class="container">
     <nav style="background-color: steelblue" class="navbar navbar-default">
         <div class="container-fluid">
@@ -36,23 +65,39 @@
             <ul>
                 {{#each article}}
                 <li>
-                    <div class="panel panel-default">
+                    <div id="{{this.id}}" class="panel panel-default">
                         <div style="color:white; background-color:steelblue" class="panel-heading">
                             <div class="article-heading">
-                                <h1>{{this.articleHeading}}</h1>
+                                <h1>{{this.title}}</h1>
                             </div>
                             <p>
-                                <a style="color:black; background-color:greenyellow" href="#" class="btn btn-primary" role="button">Notes</a>
-                                <a style="color:white; background-color:rgb(235, 13, 13)" href="#" class="btn btn-default" role="button">Delete</a>
+                                <a style="color:black; background-color:greenyellow" href="#" class="btn btn-primary" role="button" data-id="{{this.id}}">Notes ({{this.notes.length}})</a>
+                                <a style="color:white; background-color:rgb(235, 13, 13)" href="#" class="btn btn-default" role="button" data-id="{{this.id}}">Delete</a>
                             </p>
                         </div>
                         <div class="panel-body">
-                            <h4>{{this.articleContent}}</h4>
+                            <h4>{{this.summary}}</h4>
                         </div>
                     </div>
                 </li>
                 {{/each}}
             </ul>
+            <div class="col-lg-12">
+
+                {{!-- Hide #noarticles div if we have articles --}} {{!-- We are doing it this way so we can control the div later via JQuery--}}
+                {{#if articles}}
+                <div class="card" id="noarticles" style="display: none;">
+                {{else}}
+                    <div  style="background-color:steelblue; color:white" class="card" class="card" id="noarticles">
+                {{/if}}
+
+                        <h3 class="card-header text-white text-center">
+                            Uh Oh. Looks like we don't have any saved articles.
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

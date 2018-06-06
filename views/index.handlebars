@@ -57,24 +57,24 @@
                         </div>
                     </div>
                 </li>
-                {{/each}} 
-                
-               
+                {{/each}}
+
+
             </ul>
 
-             {{#if articles}}
-                <footer class="footer py-3">
-                    <div class="container text-center">
-                        <button type="button" class="btn btn-light btn-sm" id="cleardb">CLEAR DATABASE</button>
-                    </div>
-                </footer>
-                {{else}}
-                <div style="background-color:steelblue; color:white" class="card">
-                    <h3 class="card-header text-white text-center">
-                        Uh Oh. Looks like we don't have any news articles.
-                    </h3>
+            {{#if articles}}
+            <footer class="footer py-3">
+                <div class="container text-center">
+                    <button type="button" class="btn btn-light btn-sm" id="cleardb">CLEAR DATABASE</button>
                 </div>
+            </footer>
+            {{else}}
+            <div style="background-color:steelblue; color:white" class="card">
                 {{/if}}
+                <h3 class="card-header text-white text-center">
+                    Uh Oh. Looks like we don't have any news articles.
+                </h3>
+            </div>
         </div>
     </div>
 </div>
