@@ -1,32 +1,25 @@
 <div class="container">
-    <nav style="background-color: steelblue" class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" style="color:white" href="#">Mongo Scraper</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a style="color:tomato" href="/">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a style="color:white" href="/savedArticles">Saved Articles</a>
-                    </li>
-                    <li>
-                        <a  id="scrapeButton" style="background-color:red; color:white" href="/scrape">Scrape New Articles</a>
-                    </li>
-
-                </ul>
-
-            </div>
-            <!-- /.navbar-collapse -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" style="color:white" href="#">Mongo Scraper</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a style="color:tomato" href="/">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a style="color:white" href="/savedArticles">Saved Articles</a>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-danger btn-sm" style="background-color:red; color:white" id="scrapeButton">SCRAPE NEW ARTICLES</button>
+                </li>
+            </ul>
         </div>
-        <!-- /.container-fluid -->
     </nav>
 
     {{!-- Scrape results modal --}}
@@ -56,25 +49,17 @@
     </div>
     <div class="row">
         <div class="col-12">
-                {{#each articles}}
-                    <div {{this.id}}>
-                        <div class="panel panel-default">
-                            <div style="color:white; background-color:steelblue" class="panel-heading">
-                                <div class="article-heading">
-                                    <h1>{{this.title}}</h1>
-                                </div>
-                                <p>
-                                    <a style="color:white; background-color:green" href="#"  id="savearticle" class="btn btn-primary" data-id="{{this.id}}" role="button">Save Article</a>
-                                </p>
-                            </div>
-                            <div class="panel-body">
-                                <h4>{{this.summary}}</h4>
-                            </div>
-                        </div>
+            {{#each articles}}
+            <div {{this.id}}>
+                <div style="color:white; background-color:steelblue" class="card">
+                    <h1 class="card-header">{{this.title}}</h1>
+                    <div class="card-body">
+                        <h4>{{this.summary}}</h4>
+                        <a style="color:white; background-color:green" href="/" id="savearticle" class="btn btn-primary" data-id="{{this.id}}" role="button">Save Article</a>
                     </div>
-                {{/each}}
-
-            {{#if articles}}
+                </div>
+            </div>
+            {{/each}} {{#if articles}}
             <footer class="footer py-3">
                 <div class="container text-center">
                     <button type="button" class="btn btn-light btn-sm" id="cleardb">CLEAR DATABASE</button>
@@ -86,7 +71,7 @@
                     Uh Oh. Looks like we don't have any news articles.
                 </h3>
             </div>
-             {{/if}}
+            {{/if}}
         </div>
     </div>
 </div>

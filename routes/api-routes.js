@@ -58,6 +58,7 @@ app.get("/scrape", function(req, res) {
           .then(function(dbArticle) {
             // View the added result in the console
             console.log(dbArticle);
+            // res.json(dbArticle);
           })
           .catch(function(err) {
             // If an error occurred, send it to the client
@@ -66,7 +67,7 @@ app.get("/scrape", function(req, res) {
       });
   
       // If we were able to successfully scrape and save an Article, send a message to the client
-      res.send("Scrape Complete");
+      res.json(dbArticle);
     });
   });
 
@@ -104,6 +105,23 @@ app.get("/scrape", function(req, res) {
             res.json(err);
         })
     });
+
+
+     // POST to delete a saved article
+     app.post("/deletearticle/:id", function(req, res){
+         db.Article.findByIdAndUpdate({
+             _id: req.params.id
+         },
+        {
+          saved: false  
+        })
+        .then(function(dbArticle){
+            res.json(dbArticle); 
+        }) 
+        .catch(function(err){
+            res.json(err);
+        })   
+    })
 
 
 
