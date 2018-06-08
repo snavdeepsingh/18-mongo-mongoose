@@ -76,6 +76,20 @@ $(document).on("click", "#closeModal", function () {
     } )
 
 
+    // delete note button clicked
+    $(document).on("click", "#deletenote", function(){
+        let noteId = $(this).attr("data-id");
+        let articleId = $(this).attr("data-article-id");
+        $.ajax({
+            method: "POST",
+            url: "/deletenote/" + noteId
+        })
+        .then(function(){
+            getNotes(articleId);
+        })
+    })
+
+
     function getNotes(articleId){
         $.ajax({
             method: "GET",

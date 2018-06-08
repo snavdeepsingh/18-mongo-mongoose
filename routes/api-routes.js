@@ -165,5 +165,20 @@ app.get("/scrape", function(req, res) {
     })
 
 
+    // POST to delete a note
+
+    app.post("/deletenote/:id", function(req, res) {
+        db.Note.remove({
+            _id: req.params.id
+        })
+        .then(function(dbNote){
+            res.json(dbNote);
+        })
+        .catch(function(err){
+            res.json(err);
+        })
+    })
+
+
 
 }
