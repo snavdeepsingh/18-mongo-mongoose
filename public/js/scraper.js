@@ -1,8 +1,8 @@
 // scrape new articles clicked
 $(document).on("click", "#scrapeButton",function(){
-    $.get("/scrape", function(){
-        if(true) {
-            $("#numArticles").text("Added new Articles!");
+    $.get("/scrape", function(data){
+        if(data.count) {
+            $("#numArticles").text("Added " + data.count+ " new Articles!");
         }else {
             $("#numArticles").text("No new Articles found");
         }
@@ -128,3 +128,16 @@ $(document).on("click", "#closeModal", function () {
             $('#viewnotes[data-id="' + data._id + '" ]').text("NOTES (" +data.notes.length + ")");
         })
     }
+
+
+    // clear DATABASE button clicked
+
+    $(document).on("click", "#cleardb", function(){
+        $.ajax({
+            method: "GET",
+            url: "/cleardb"
+        })
+        .then(function(){
+            window.location = "/";
+        })
+    })

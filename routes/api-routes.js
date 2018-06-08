@@ -28,46 +28,49 @@ module.exports = function (app) {
         // res.send("Home");
     });
 
-        // A GET route for scraping the echojs website
-app.get("/scrape", function(req, res) {
-    // First, we grab the body of the html with request
-    axios.get("http://www.nytimes.com/").then(function(response) {
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
-      var $ = cheerio.load(response.data);
-  
-      // Now, we grab every h2 within an article tag, and do the following:
-      $("article.story").has("h2").each(function(i, element) {
-        // Save an empty result object
-        var result = {};
-  
-        // Add the text and href of every link, and save them as properties of the result object
-        result.title = $(this)
-          .children("h2")
-          .children("a")
-          .text();
-        result.link = $(this)
-          .children("h2")  
-          .children("a")
-          .attr("href");
-        result.summary = $(this)
-        .children("p.summary")
-        .text();
-  
-        // Create a new Article using the `result` object built from scraping
-        db.Article.create(result)
-          .then(function(dbArticle) {
-            // View the added result in the console
-            console.log(dbArticle);
-            // res.json(dbArticle);
-          })
-          .catch(function(err) {
-            // If an error occurred, send it to the client
-            return res.json(err);
-          });
+  // GET to scrape new articles
+  app.get("/scrape", function (req, res) {
+
+    // Load the Articles document into a local array/object
+    db.Article.find({}, function (err, dbArticles) {
+
+      // Get the website data
+      axios.get("http://www.nytimes.com/").then(function (response) {
+
+        // Load into cheerio for scraping by element(s)
+        let $ = cheerio.load(response.data);
+        let counter = 0;
+
+        // Loop through all the results that have article, story and h2 elements.
+        $("article.story").has("h2").each(function (i, element) {
+
+          let result = {};
+          result.title = $(element).children("h2").children("a").text();
+          result.link = $(element).children("h2").children("a").attr("href");
+          result.summary = $(element).children("p.summary").text();
+
+          // Check for duplicates
+          let duplicate = false;
+          for (let i = 0; i < dbArticles.length; i++) {
+            if (dbArticles[i].title === result.title) {
+              duplicate = true;
+              break;
+            }
+          }
+
+          // Create article only if not a duplicate and all three have values
+          if (!duplicate && result.title && result.link && result.summary) {
+            db.Article.create(result);
+            counter++;
+          }
+
+        });
+        // Return number of artices added
+        res.json({
+          count: counter
+        });
+
       });
-  
-      // If we were able to successfully scrape and save an Article, send a message to the client
-      res.json(dbArticle);
     });
   });
 
@@ -179,6 +182,16 @@ app.get("/scrape", function(req, res) {
         })
     })
 
-
+    // GET to delete DATABASE
+    app.get("/cleardb", function(req, res){
+        db.Article.remove({})
+        .then(function(){
+            // res.json(dbArticle);
+            res.send("Cleared");
+        })
+        .catch(function(err){
+            res.json(err);
+        })
+    })
 
 }
