@@ -1,11 +1,11 @@
 // scrape new articles clicked
 $(document).on("click", "#scrapeButton",function(){
     $.get("/scrape", function(){
-        // if(data) {
-        //     $("#numArticles").text("Added new Articles!");
-        // }else {
-        //     $("#numArticles").text("No new Articles found");
-        // }
+        if(true) {
+            $("#numArticles").text("Added new Articles!");
+        }else {
+            $("#numArticles").text("No new Articles found");
+        }
         $("#scrapeModal").modal("toggle");
     })
 });
@@ -40,15 +40,21 @@ $(document).on("click", "#closeModal", function () {
           url: "/deletearticle/" + thisId
       })
       .then(function(){
-          $("#" + thisId).slideUp()
+          $("#" + thisId).slideUp("normal", function() {
+            $(this).remove();
+            if ($("#search-results").children().length == 0) {
+              $("#noarticles").show();
+            }
+          });
       })
+      window.location.reload(true);
   })
 
     // Notes button clicked
     $(document).on("click", "#viewnotes", function(){
-        // let articleId = $(this).attr("data-id");
-        // getNotes(articleId);
-        $("#notesModal").modal({show: true});
+        let articleId = $(this).attr("data-id");
+        getNotes(articleId);
+        $("#notesModal").modal();
     })
 
 
@@ -59,9 +65,11 @@ $(document).on("click", "#closeModal", function () {
         $.ajax({
             method: "POST",
             url: "/articles/" + articleId,
-            data: { body: newnote}
+            data: { body: newnote }
         })
         .then(function(data){
+            console.log(data);
+            console.log("on click",articleId);
             getNotes(articleId);
         })
         $("bodyinput").val("");
@@ -71,15 +79,17 @@ $(document).on("click", "#closeModal", function () {
     function getNotes(articleId){
         $.ajax({
             method: "GET",
-            url: "/article/" + articleId
+            url: "/articles/" + articleId
         })
         .then(function(data){
             $("#notesModal").modal("toggle");
             $("#notesModalLabel").text("Notes for Article: " + data._id);
-            $("#saveNote").attr("data-id", data._id);
+            $("#savenote").attr("data-id", data._id);
             $("#displaynotes").empty();
-
-            if(data.notes.length){
+                console.log(data);
+                let Notes = data.notes;
+                console.log(Notes);
+            if(Notes.length){
                 // loop through all of the notes and append them to the #displaynotes div
                 for(let i = 0; i < data.notes.length; i++) {
                     // build two divs (card and cardbody)
